@@ -11,13 +11,13 @@ import tensorflow as tf
 # x shape needs to be [rank, # of inputs]
 x = tf.placeholder(tf.float32, shape=[None, 4], name="x")
 # y_ shape needs to be [rank, # of possible outcomes (if using one-hot)]
-y_ = tf.placeholder(tf.float32, [None,3], name="y_")
+y_ = tf.placeholder(tf.float32, [None,2], name="y_")
 
 # Variables (for weights and bias), both initialized to zeros
 # W shape needs to be zeros([ # of inputs used in x, # possible outcomes used in y_])
-W = tf.Variable(tf.zeros([4, 3]), name="W")
+W = tf.Variable(tf.zeros([4, 2]), name="W")
 # b shape needs to be zeros([# possible outcomes used in y_])
-b = tf.Variable(tf.zeros([3]), name="b")
+b = tf.Variable(tf.zeros([2]), name="b")
 
 # specify linear model (equlivalent to W*x + b)
 # y = tf.matmul(W,x) + b
@@ -35,13 +35,13 @@ train = optimizer.minimize(loss)
 with tf.Session() as sess:
     tf.global_variables_initializer().run()
 
-    # x_train = [height, weight, shoe size]
-    x_train = [[2,190,11,21], [1,95,5,30], [1.2,100,6,31]]
-    y_train = [[1,0,0], [0,1,0], [0,1,0]] # using one hot vector ([M,F], not prob -- boolean)
+    # x_train = [height, weight, shoe size, BMI]
+    x_train = [[2,190,11,21], [1,95,5,30], [1.2,100,6,31], [1.8,200,13,23], [1,105,7,25], [1.6,210,9,31]]
+    y_train = [[1,0], [0,1], [0,1], [1,0], [0,1], [1,0]] # using one hot vector ([M,F], not prob -- boolean)
     # x_train = [[2,190,11], [1,95,5], [1.9,200,10], [1.3,120,7]]
     # y_train = [0,1,0,1]
     # y_train = [[.8,.2],[.2,.8]]
-    for i in range(1000):
+    for i in range(5):
         sess.run(train, {x: x_train, y_:y_train})
         curr_W, curr_b, curr_loss = sess.run([W, b, loss], {x: x_train, y_: y_train})
         print("W: %s b: %s loss: %s"%(curr_W, curr_b, curr_loss))
