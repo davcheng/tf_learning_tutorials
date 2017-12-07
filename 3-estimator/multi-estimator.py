@@ -9,8 +9,11 @@ import numpy as np
 import tensorflow as tf
 
 # Data sets
-IRIS_TRAINING = "dumb_data/data_training.csv"
-IRIS_TEST = "dumb_data/data_test.csv"
+IRIS_TRAINING = "multi_data/data_training.csv"
+IRIS_TRAINING_URL = "http://download.tensorflow.org/data/iris_training.csv"
+
+IRIS_TEST = "multi_data/data_test.csv"
+IRIS_TEST_URL = "http://download.tensorflow.org/data/iris_test.csv"
 
 def main():
     # If the training and test sets aren't stored locally, download them.
@@ -39,14 +42,14 @@ def main():
 
     # Specify that all features have real-value data
     # tf.feature_column.numeric_column used for continuous feature data
-    feature_columns = [tf.feature_column.numeric_column("x", shape=[3])]
+    feature_columns = [tf.feature_column.numeric_column("x", shape=[4])]
 
     # Build 3 layer Deep Neural Network (DNN) with 10, 20, 10 units respectively.
     classifier = tf.estimator.DNNClassifier(
         feature_columns=feature_columns,
         hidden_units=[10, 20, 10],
         n_classes=3,
-        model_dir="./data_model")
+        model_dir="./iris_model")
 
     # Define the training inputs
     train_input_fn = tf.estimator.inputs.numpy_input_fn(
@@ -74,8 +77,8 @@ def main():
 # def predict():
     # Classify two new flower samples.
     new_samples = np.array(
-        [[1, 5, 4.5],
-         [2, 12, 5.0]], dtype=np.float32)
+        [[6.4, 3.2, 4.5, 1.5],
+         [5.8, 3.1, 5.0, 1.7]], dtype=np.float32)
     predict_input_fn = tf.estimator.inputs.numpy_input_fn(
         x={"x": new_samples},
         num_epochs=1,
