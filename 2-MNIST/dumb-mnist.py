@@ -41,7 +41,7 @@ with tf.Session() as sess:
     # x_train = [[2,190,11], [1,95,5], [1.9,200,10], [1.3,120,7]]
     # y_train = [0,1,0,1]
     # y_train = [[.8,.2],[.2,.8]]
-    for i in range(5):
+    for i in range(50):
         sess.run(train, {x: x_train, y_:y_train})
         curr_W, curr_b, curr_loss = sess.run([W, b, loss], {x: x_train, y_: y_train})
         print("W: %s b: %s loss: %s"%(curr_W, curr_b, curr_loss))

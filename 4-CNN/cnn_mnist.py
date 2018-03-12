@@ -10,5 +10,8 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 # Our application logic will be added here
 
+def main(x):
+    print("yo")
+
 if __name__ == "__main__":
   tf.app.run()
